@@ -15,7 +15,7 @@ export default function NewEvent() {
 
     const formData = new FormData(event.currentTarget);
     
-    // 👇 Preparando os dados
+    // 👇 Preparando os dados (com tipagem 'as string' para o TypeScript não reclamar)
     const newEventData = {
       title: formData.get("title") as string,
       location: formData.get("location") as string,
@@ -27,7 +27,6 @@ export default function NewEvent() {
       // 👇 AQUI MUDOU: Chamada Real à API (nada de setTimeout mais!)
       await createEvent(newEventData);
       
-      // 👇 Note que tirei o "(Simulação)" da mensagem
       alert("Evento cadastrado com sucesso!");
       
       // Força o Next.js a limpar o cache da página inicial para exibir o novo evento
@@ -43,7 +42,7 @@ export default function NewEvent() {
     }
   }
 
-  // O restante do HTML (return) continua IDÊNTICO, mas precisa estar aqui dentro
+  // O restante do HTML (return) continua IDÊNTICO ao que você já tem
   return (
     <div className="mx-auto max-w-xl">
       <h1 className="mb-6 text-2xl font-bold text-slate-800">Cadastrar Novo Evento</h1>
