@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google"; 
 import "./globals.css";
-import Header from "@/components/Header"; 
+import Header from "@/components/Header";
+import { AuthProvider } from "@/contexts/AuthContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,12 +19,14 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${inter.className} min-h-screen bg-slate-50 text-slate-900`}>
         {/* O Header fica fixo no topo da estrutura */}
-        <Header />
-        
-        {/* O 'children' é onde o Next.js injeta o conteúdo de cada página (page.tsx) */}
-        <main className="container mx-auto max-w-5xl p-6">
-          {children}
-        </main>
+        <AuthProvider>
+            <Header />
+            
+            {/* O 'children' é onde o Next.js injeta o conteúdo de cada página (page.tsx) */}
+            <main className="container mx-auto max-w-5xl p-6">
+              {children}
+            </main>
+        </AuthProvider>    
       </body>
     </html>
   );
