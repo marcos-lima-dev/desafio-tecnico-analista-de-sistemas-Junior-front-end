@@ -1,4 +1,4 @@
-📅 Gerenciador de Eventos (Next.js 15+)
+# 📅 Gerenciador de Eventos (Next.js 15+)
 
 Sistema de gerenciamento de eventos desenvolvido como desafio técnico. O projeto permite visualizar, buscar e cadastrar eventos, utilizando uma arquitetura moderna com **Next.js 15 (App Router)** e **Server Components**.
 
@@ -24,8 +24,8 @@ Sistema de gerenciamento de eventos desenvolvido como desafio técnico. O projet
 
 1. **Clone o repositório:**
    ```bash
-   git clone [https://github.com/SEU-USUARIO/event-manager-next.git](https://github.com/SEU-USUARIO/event-manager-next.git)
-   cd event-manager-next
+   git clone https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git
+   cd desafio-tecnico-analista-de-sistemas-Junior-front-end
 Instale as dependências:
 
 Bash
@@ -55,37 +55,4 @@ Persistência de Dados: Como este é um desafio técnico sem banco de dados exte
 
 Next.js 15: O projeto utiliza estritamente as novas convenções do Next 15, como await params em rotas dinâmicas e cache: 'no-store' para dados em tempo real.
 
-Feito com 💙 por [Seu Nome]
-
-
----
-
-### 🚀 Tarefa Bônus: DOC-01 – Arquivo SQL de Referência
-
-**Prioridade:** 🟧 P1
-**Objetivo:** Mostrar que você sabe SQL, mesmo não usando banco de dados no projeto.
-
-Crie a pasta `database` na raiz e dentro dela o arquivo `events.sql`.
-
-```sql
--- Arquivo de referência para futura migração para PostgreSQL
-
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE events (
-  id SERIAL PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  location VARCHAR(255) NOT NULL,
-  date DATE NOT NULL,
-  category VARCHAR(100) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Exemplo de Insert
-INSERT INTO events (title, location, date, category) 
-VALUES ('Workshop Next.js', 'Online', '2025-10-10', 'Educação');
+Feito com 💙 por [Marcos de Sousa Lima]
