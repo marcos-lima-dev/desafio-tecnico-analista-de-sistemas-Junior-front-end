@@ -1,6 +1,6 @@
 import { Event } from "@/types";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
+const BASE_URL: string = process.env.NEXT_PUBLIC_API_URL || "/api";
 
 // Busca todos os eventos (com suporte a filtro)
 export async function getEvents(query?: string, page: number = 1) {
@@ -13,7 +13,7 @@ export async function getEvents(query?: string, page: number = 1) {
     params.append('q', query);
   }
 
-  const url = ${BASE_URL}/events?${params.toString()};
+  const url = `${BASE_URL}/events?${params.toString()}`;
 
   
   const res = await fetch(url, {
@@ -30,7 +30,7 @@ export async function getEvents(query?: string, page: number = 1) {
 
 // Busca evento por ID
 export async function getEventById(id: number): Promise<Event | undefined> {
-  const response = await fetch(${BASE_URL}/events/${id}, { cache: "no-store" });
+  const response = await fetch(`${BASE_URL}/events/${id}`, { cache: "no-store" });
   
   if (!response.ok) {
     return undefined;
@@ -41,7 +41,7 @@ export async function getEventById(id: number): Promise<Event | undefined> {
 
 // Cria novo evento (Isso é novo!)
 export async function createEvent(eventData: Partial<Event>): Promise<Event> {
-  const response = await fetch(${BASE_URL}/events, {
+  const response = await fetch(`${BASE_URL}/events`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export async function createEvent(eventData: Partial<Event>): Promise<Event> {
 }
 // ADICIONANDO DELETES
 export async function deleteEvent(id: number): Promise<void> {
-  const response = await fetch(${BASE_URL}/events/${id}, {
+  const response = await fetch(`${BASE_URL}/events/${id}`, {
     method: "DELETE",
   });
 
