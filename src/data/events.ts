@@ -1,9 +1,13 @@
 import { Event } from "@/types";
 
-// Isso age como nosso banco de dados. 
-// Como é uma variável exportada, ela mantém o valor na memória enquanto o servidor roda.
-export const events: Event[] = [
-  {
+// Para evitar que o hot-reload do Next.js reinicie nossa "base de dados" em memória a cada alteração,
+// armazenamos os dados em um objeto global. Isso só é recomendado para ambientes de desenvolvimento.
+declare global {
+  var __events: Event[] | undefined;
+}
+
+const initialEvents: Event[] = [
+    {
     id: 1,
     title: "Workshop Next.js 15",
     location: "Rio de Janeiro, RJ",
@@ -131,3 +135,16 @@ export const events: Event[] = [
     category: "Conferência",
   },
 ];
+
+let events: Event[];
+
+if (process.env.NODE_ENV === 'production') {
+  events = initialEvents;
+} else {
+  if (!global.__events) {
+    global.__events = initialEvents;
+  }
+  events = global.__events;
+}
+
+export { events };

@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const loginPromise = new Promise((resolve, reject) => {
       setTimeout(() => {
         if (pass === "123456") {
-          resolve("Bem-vindo, Chef! 👨‍🍳");
+          resolve("Bem-vindo");
         } else {
           reject(new Error("Senha incorreta (Dica: 123456)"));
         }

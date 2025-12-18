@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import toast from "react-hot-toast"; // 👈 Importamos o Toast para validação local
-
+import toast from "react-hot-toast"; 
 export default function LoginPage() {
   const { login } = useAuth();
   
@@ -16,7 +15,7 @@ export default function LoginPage() {
     setLoading(true);
 
     if (!email || !password) {
-      toast.error("Preencha todos os campos, chef!"); 
+      toast.error("Preencha todos os campos"); 
       setLoading(false);
       return;
     }

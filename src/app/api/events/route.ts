@@ -32,8 +32,11 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const body = await request.json();
 
+  // Encontra o maior ID existente e adiciona 1 para garantir um ID único.
+  const maxId = events.reduce((max, event) => (event.id > max ? event.id : max), 0);
+
   const newEvent: Event = {
-    id: events.length + 1, // Gera ID simples
+    id: maxId + 1, // Gera ID único e sequencial
     ...body,
   };
 
