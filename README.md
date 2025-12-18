@@ -1,6 +1,6 @@
 # 📅 Gerenciador de Eventos (Next.js 15+)
 
-Sistema de gerenciamento de eventos desenvolvido como desafio técnico. O projeto permite visualizar, buscar e cadastrar eventos, utilizando uma arquitetura moderna com **Next.js 15 (App Router)** e **Server Components**.
+Sistema de gerenciamento de eventos desenvolvido como desafio técnico. O projeto permite visualizar, buscar, paginar e gerenciar eventos (CRUD), utilizando uma arquitetura moderna com **Next.js 15 (App Router)** e **Server Components**.
 
 ## 🚀 Tecnologias
 
@@ -8,51 +8,49 @@ Sistema de gerenciamento de eventos desenvolvido como desafio técnico. O projet
 - **Linguagem:** TypeScript
 - **Estilização:** Tailwind CSS
 - **Estado Global:** React Context API (Auth Mock)
+- **Feedback Visual:** React Hot Toast (Notificações)
 - **API:** Next.js API Routes (Backend Mockado)
-- **Validação:** HTML5 nativo + FormData
 
 ## ⚙️ Funcionalidades
 
-- [x] **Listagem de Eventos:** Renderização no servidor (SSR) para melhor SEO e performance.
-- [x] **Busca:** Filtragem por nome ou categoria via URL Search Params.
-- [x] **Detalhes:** Rotas dinâmicas (`/events/[id]`) com dados atualizados.
-- [x] **Cadastro:** Formulário integrado com API Mock (POST).
-- [x] **Autenticação Simulada:** Login/Logout via Context API.
+- [x] **CRUD Completo:** Criação, Leitura e Exclusão de eventos.
+- [x] **Paginação:** Navegação otimizada entre listas de eventos.
+- [x] **Busca em Tempo Real:** Filtragem por título ou categoria.
+- [x] **Detalhes Dinâmicos:** Rotas individuais (`/events/[id]`) com dados atualizados.
+- [x] **Autenticação Simulada:**
+  - Login com validação de credenciais.
+  - Proteção de rotas privadas (Middleware/Context).
+  - Feedback de carregamento e erro.
+- [x] **UX Aprimorada:**
+  - Confirmação interativa para exclusão.
+  - Toasts de sucesso e erro.
+  - Estados de loading em botões.
 - [x] **Design Responsivo:** Layout fluido para Mobile e Desktop.
+
+## 📸 Galeria do Projeto
+
+### 🏠 Dashboard e Detalhes
+| Tela Inicial (Listagem e Busca) | Detalhes do Evento |
+| :---: | :---: |
+| ![Home](./public/home-screen.png) | ![Detalhes](./public/details-screen.png) |
+
+### 🔐 Área Administrativa
+| Login & Validação | Cadastro de Eventos | Confirmação de Exclusão |
+| :---: | :---: | :---: |
+| ![Login](./public/login-screen.png) | ![Cadastro](./public/create-event-screen.png) | ![Delete](./public/delete-modal.png) |
+
+> *O sistema conta com feedback visual (Toasts) para todas as ações do usuário.*
+
+## 🔐 Credenciais de Acesso
+
+Para testar as funcionalidades administrativas (Criar e Excluir eventos), utilize as credenciais abaixo na tela de login:
+
+- **E-mail:** `teste@iplan.rio.rj.gov.br` (ou qualquer e-mail válido)
+- **Senha:** `123456`
 
 ## 📦 Como rodar o projeto
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git
+   git clone [https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git](https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git)
    cd desafio-tecnico-analista-de-sistemas-Junior-front-end
-Instale as dependências:
-
-Bash
-
-npm install
-Rode o servidor de desenvolvimento:
-
-Bash
-
-npm run dev
-Acesse: abra http://localhost:3000 no seu navegador.
-
-📂 Estrutura do Projeto
-src/
-├── app/              # Rotas e Páginas (App Router)
-│   ├── api/          # Rotas de API (Backend Mock)
-│   ├── events/       # Rotas de Eventos (Detalhes e Novo)
-│   └── page.tsx      # Página Inicial
-├── components/       # Componentes reutilizáveis (Header, Cards, Inputs)
-├── contexts/         # Gerenciamento de estado (Auth)
-├── data/             # Persistência de dados em memória
-├── services/         # Camada de integração com API (Fetch)
-├── types/            # Definições de Tipos TypeScript
-└── styles/           # Estilos globais
-📝 Notas do Desenvolvedor
-Persistência de Dados: Como este é um desafio técnico sem banco de dados externo, a persistência é feita em memória. Se o servidor reiniciar, os dados voltam ao estado inicial.
-
-Next.js 15: O projeto utiliza estritamente as novas convenções do Next 15, como await params em rotas dinâmicas e cache: 'no-store' para dados em tempo real.
-
-Feito com 💙 por [Marcos de Sousa Lima]
