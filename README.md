@@ -66,18 +66,6 @@ Bash
 npm run dev
 Acesse: abra http://localhost:3000 no seu navegador.
 
-📂 Estrutura do Projeto
-src/
-├── app/              # Rotas e Páginas (App Router)
-│   ├── api/          # Rotas de API (GET, POST, DELETE Mockados)
-│   ├── events/       # Rotas de Eventos (Detalhes e Novo)
-│   └── login/        # Página de Login
-├── components/       # Componentes reutilizáveis (Header, Cards, Toasts)
-├── contexts/         # Gerenciamento de estado e Autenticação
-├── data/             # Persistência de dados em memória (Mock DB)
-├── services/         # Camada de integração com API (Fetch Wrapper)
-├── types/            # Definições de Tipos TypeScript
-└── styles/           # Estilos globais
 📝 Notas do Desenvolvedor
 Persistência de Dados: Como este é um desafio técnico com foco em Front-end, não foi utilizado banco de dados externo. A persistência é feita em memória (src/data/events.ts).
 
