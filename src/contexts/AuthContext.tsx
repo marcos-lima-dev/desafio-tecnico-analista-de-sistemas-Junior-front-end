@@ -39,14 +39,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       error: (err: any) => `${err.message}`,
     })
     .then(() => {
-      // 3. Só entra aqui se DEU CERTO (resolve)
       setUser({ name: "Admin Iplan", email });
       router.push("/");
     })
     .catch((error) => {
-      // 4. Só entra aqui se DEU ERRO (reject)
       console.error("Erro de login:", error);
-      // Não precisamos fazer nada visual, o Toast vermelho já apareceu.
+      throw error;
     })
     .finally(() => {
       setIsLoading(false);
@@ -56,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   function logout() {
     setUser(null);
     router.push("/login");
-    toast.success("Você saiu do sistema."); // Feedback visual ao sair
+    toast.success("Você saiu do sistema."); 
   }
 
   return (

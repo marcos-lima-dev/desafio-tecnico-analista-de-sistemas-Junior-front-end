@@ -2,31 +2,32 @@
 
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import toast from "react-hot-toast"; // 👈 Importamos o Toast para validação local
 
 export default function LoginPage() {
   const { login } = useAuth();
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError(""); // Limpa erros antigos
     setLoading(true);
 
     if (!email || !password) {
-      setError("Preencha todos os campos, chef!");
+      toast.error("Preencha todos os campos, chef!"); 
       setLoading(false);
       return;
     }
 
     try {
       await login(email, password);
-      // Se der certo, o AuthContext redireciona
+      
     } catch (err: any) {
-      setError(err.message || "Erro ao entrar.");
+      
+      setPassword("");
+      
       setLoading(false);
     }
   }
@@ -45,13 +46,6 @@ export default function LoginPage() {
         <div className="p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             
-            {/* Mensagem de Erro */}
-            {error && (
-              <div className="rounded-md bg-red-50 p-4 text-sm text-red-600 border border-red-200">
-                🚨 {error}
-              </div>
-            )}
-
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
                 E-mail Corporativo
