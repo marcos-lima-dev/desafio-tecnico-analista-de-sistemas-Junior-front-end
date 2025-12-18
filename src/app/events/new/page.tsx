@@ -1,118 +1,142 @@
-"use client"; 
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-// 👇 IMPORTANTE: Importando a função que fala com a API real
-import { createEvent } from "@/services/events"; 
+import { createEvent } from "@/services/events";
+import toast from "react-hot-toast";
 
 export default function NewEvent() {
-  const router = useRouter(); 
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setLoading(true);
+  const [formData, setFormData] = useState({
+    title: "",
+    date: "",
+    location: "",
+    category: "",
+  });
 
-    const formData = new FormData(event.currentTarget);
-    
-    // 👇 Preparando os dados
-    const newEventData = {
-      title: formData.get("title") as string,
-      location: formData.get("location") as string,
-      date: formData.get("date") as string,
-      category: formData.get("category") as string,
-    };
-
-    try {
-      // 👇 AQUI MUDOU: Chamada Real à API (nada de setTimeout mais!)
-      await createEvent(newEventData);
-      
-      // 👇 Note que tirei o "(Simulação)" da mensagem
-      alert("Evento cadastrado com sucesso!");
-      
-      // Força o Next.js a limpar o cache da página inicial para exibir o novo evento
-      router.refresh(); 
-      
-      router.push("/");
-      
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao cadastrar evento. Verifique o console.");
-    } finally {
-      setLoading(false);
-    }
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  // O restante do HTML (return) continua IDÊNTICO, mas precisa estar aqui dentro
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+
+    if (!formData.title || !formData.date || !formData.category) {
+      toast.error("Preencha os campos obrigatórios!");
+      setLoading(false);
+      return;
+    }
+
+    const savePromise = createEvent(formData);
+
+    await toast.promise(savePromise, {
+      loading: 'Salvando evento no sistema...',
+      success: 'Evento criado com sucesso! 🎉',
+      error: 'Erro ao criar evento.',
+    })
+    .then(() => {
+      router.refresh();
+      router.push("/");
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+  }
+
   return (
-    <div className="mx-auto max-w-xl">
-      <h1 className="mb-6 text-2xl font-bold text-slate-800">Cadastrar Novo Evento</h1>
+    <div className="mx-auto max-w-2xl">
+      <h1 className="mb-8 text-3xl font-bold text-slate-800">Criar Novo Evento</h1>
       
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg bg-white p-6 shadow-md border border-slate-200">
+      <form onSubmit={handleSubmit} className="space-y-6 rounded-xl bg-white p-8 shadow-sm border border-slate-200">
         
-        {/* Campo: Título */}
+        {/* Título */}
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-slate-700">Título do Evento</label>
-          <input 
-            type="text" 
-            name="title" 
-            id="title" 
-            required 
-            className="mt-1 w-full rounded-md border border-slate-300 p-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            placeholder="Ex: Workshop React"
+          <label className="mb-2 block text-sm font-medium text-slate-700">
+            Título do Evento *
+          </label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Ex: Workshop de Next.js"
+            className="w-full rounded border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
         </div>
 
-        {/* Campo: Categoria */}
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Data */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Data *
+            </label>
+            <input
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              className="w-full rounded border border-slate-300 px-4 py-2 text-slate-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Categoria */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Categoria *
+            </label>
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className="w-full rounded border border-slate-300 px-4 py-2 text-slate-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            >
+              <option value="">Selecione...</option>
+              <option value="Tecnologia">Tecnologia</option>
+              <option value="Educação">Educação</option>
+              <option value="Cultura">Cultura</option>
+              <option value="Lazer">Lazer</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Local */}
         <div>
-          <label htmlFor="category" className="block text-sm font-medium text-slate-700">Categoria</label>
-          <select 
-            name="category" 
-            id="category"
-            required
-            className="mt-1 w-full rounded-md border border-slate-300 p-2 text-slate-900 focus:border-blue-500 focus:outline-none"
-          >
-            <option value="">Selecione...</option>
-            <option value="Educação">Educação</option>
-            <option value="Networking">Networking</option>
-            <option value="Competição">Competição</option>
-            <option value="Festa">Festa</option>
-          </select>
+          <label className="mb-2 block text-sm font-medium text-slate-700">
+            Localização
+          </label>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            placeholder="Ex: Auditório Iplan"
+            className="w-full rounded border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          />
         </div>
 
-        {/* Grupo: Data e Local */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="date" className="block text-sm font-medium text-slate-700">Data</label>
-            <input 
-              type="date" 
-              name="date" 
-              id="date" 
-              required
-              className="mt-1 w-full rounded-md border border-slate-300 p-2 text-slate-900 focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="location" className="block text-sm font-medium text-slate-700">Local</label>
-            <input 
-              type="text" 
-              name="location" 
-              id="location" 
-              required
-              placeholder="Ex: Online"
-              className="mt-1 w-full rounded-md border border-slate-300 p-2 text-slate-900 focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-        </div>
-
-        {/* Botão Salvar */}
-        <div className="pt-4">
-          <button 
-            type="submit" 
-            disabled={loading} 
-            className="w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 disabled:bg-blue-300"
+        {/* Botões */}
+        <div className="flex justify-end gap-4 pt-4">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="rounded px-6 py-2 text-slate-600 hover:bg-slate-100 transition"
           >
-            {loading ? "Salvando..." : "Cadastrar Evento"}
+            Cancelar
+          </button>
+          
+          <button
+            type="submit"
+            disabled={loading}
+            className="rounded bg-blue-600 px-6 py-2 font-semibold text-white transition hover:bg-blue-700 disabled:bg-blue-300 flex items-center gap-2"
+          >
+            {loading ? "Salvando..." : "Criar Evento"}
           </button>
         </div>
       </form>

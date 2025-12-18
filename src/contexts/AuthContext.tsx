@@ -2,10 +2,11 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast"; 
 
 interface AuthContextType {
   user: { name: string; email: string } | null;
-  login: (email: string, pass: string) => Promise<void>; // Agora login retorna uma Promise
+  login: (email: string, pass: string) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -19,28 +20,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function login(email: string, pass: string) {
     setIsLoading(true);
-    
-    // Simula um delay de rede (pra dar aquele suspense gostoso)
-    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    try {
-      // Validação "Hardcoded" (O segredo do Master Chef)
-      if (pass === "123456") {
-        setUser({ name: "Admin Iplan", email });
-        router.push("/"); // Manda pra home logado
-      } else {
-        throw new Error("Senha incorreta (Dica: 123456)");
-      }
-    } catch (error) {
-      throw error; // Joga o erro pra página de login tratar
-    } finally {
+    // 1. Promessa da validação
+    const loginPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (pass === "123456") {
+          resolve("Bem-vindo, Chef! 👨‍🍳");
+        } else {
+          reject(new Error("Senha incorreta (Dica: 123456)"));
+        }
+      }, 1500);
+    });
+
+    // 2. O toast.promise gerencia o visual baseado na promessa acima
+    await toast.promise(loginPromise, {
+      loading: 'Verificando credenciais...',
+      success: (msg: any) => `${msg}`,
+      error: (err: any) => `${err.message}`,
+    })
+    .then(() => {
+      // 3. Só entra aqui se DEU CERTO (resolve)
+      setUser({ name: "Admin Iplan", email });
+      router.push("/");
+    })
+    .catch((error) => {
+      // 4. Só entra aqui se DEU ERRO (reject)
+      console.error("Erro de login:", error);
+      // Não precisamos fazer nada visual, o Toast vermelho já apareceu.
+    })
+    .finally(() => {
       setIsLoading(false);
-    }
+    });
   }
 
   function logout() {
     setUser(null);
     router.push("/login");
+    toast.success("Você saiu do sistema."); // Feedback visual ao sair
   }
 
   return (

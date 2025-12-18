@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import { AuthProvider } from "@/contexts/AuthContext";
+import ToastProvider from "@/components/ToastProvider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,6 +26,7 @@ export default function RootLayout({
             
             {/* O 'children' é onde o Next.js injeta o conteúdo de cada página (page.tsx) */}
             <main className="container mx-auto max-w-5xl p-6">
+              <ToastProvider />
               {children}
             </main>
         </AuthProvider>    
