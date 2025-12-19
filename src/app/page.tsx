@@ -34,7 +34,7 @@ export default async function Home(props: HomeProps) {
         <>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* CORREÇÃO DO MAP (Removendo : Event para evitar erro de import) 👇 */}
-            {events.map((event) => (
+            {events.map((event: any) => (
               <EventCard key={event.id} event={event} />
             ))}
           </div>
