@@ -1,3 +1,4 @@
+import { Event } from "@/types";
 import { getEvents } from "@/services/events";
 import SearchEvents from "@/components/SearchEvents";
 import EventCard from "@/components/EventCard";
@@ -34,7 +35,7 @@ export default async function Home(props: HomeProps) {
         <>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* CORREÇÃO DO MAP (Removendo : Event para evitar erro de import) 👇 */}
-            {events.map((event: any) => (
+            {events.map((event: Event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </div>
