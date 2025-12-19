@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
 
     // 1. Promessa da validação
-    const loginPromise = new Promise((resolve, reject) => {
+    const loginPromise = new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         if (pass === "123456") {
           resolve("Bem-vindo");
@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // 2. O toast.promise gerencia o visual baseado na promessa acima
     await toast.promise(loginPromise, {
       loading: 'Verificando credenciais...',
-      success: (msg: string) => `${msg}`,
+      success: (msg) => `${msg}`, 
       error: (err: Error) => `${err.message}`,
     })
     .then(() => {
@@ -44,8 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     })
     .catch((error) => {
       console.error("Erro de login:", error);
-      throw error;
-    })
+      })
     .finally(() => {
       setIsLoading(false);
     });
