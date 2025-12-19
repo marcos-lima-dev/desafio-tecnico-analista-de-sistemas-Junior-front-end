@@ -1,12 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { Event } from "@/types";
 import DeleteButton from "./DeleteButton";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface EventCardProps {
   event: Event;
 }
 
 export default function EventCard({ event }: EventCardProps) {
+  const { user } = useAuth(); // 3. Pegamos o usuário logado
+
   return (
     <div className="flex flex-col rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
       <div className="mb-4">
@@ -23,7 +28,7 @@ export default function EventCard({ event }: EventCardProps) {
 
       {/* Área de Ações */}
       <div className="mt-auto pt-4 flex gap-2">
-        {/* Botão Ver Detalhes (Ocupa o espaço que sobrar com flex-1) */}
+        {/* Botão Ver Detalhes */}
         <Link 
           href={`/events/${event.id}`} 
           className="flex-1 rounded bg-slate-900 py-2 text-center text-sm font-medium text-white transition hover:bg-slate-800"
@@ -31,8 +36,9 @@ export default function EventCard({ event }: EventCardProps) {
           Ver Detalhes
         </Link>
 
-        {/* Botão de Deletar (Fica ao lado) */}
-        <DeleteButton eventId={event.id} />
+        {user && (
+          <DeleteButton eventId={event.id} />
+        )}
       </div>
     </div>
   );
