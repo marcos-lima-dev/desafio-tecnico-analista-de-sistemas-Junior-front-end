@@ -1,39 +1,39 @@
 name: CI (Integração Contínua)
 
 on:
-  pull_request: # Roda quando abrirem um PR
+  pull_request:
   push:
-    branches: [main] # Roda quando fizerem push na main
+    branches: [main]
 
 jobs:
   build:
     name: Build e Validação
-    runs-on: ubuntu-latest # Usa uma máquina Linux virtual
+    runs-on: ubuntu-latest
 
     steps:
-      # 1. Baixa o seu código na máquina virtual
+      # 1. Baixa o código
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      # 2. Instala o Node.js versão 20 (compatível com Next 15)
+      # 2. Configura o Node
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm' # Faz cache das dependências pra ser mais rápido
+          cache: 'npm'
 
-      # 3. Instala as dependências de forma limpa (igual ao package-lock.json)
+      # 3. Instala dependências
       - name: Instalar dependências
         run: npm ci
 
-      # 4. Roda o Linter para ver se tem erros de código/estilo
+      # 4. Lint
       - name: Verificar Lint
         run: npm run lint
 
-      # 5. Roda os testes (Se você não tiver testes, mantenha comentado com #)
-       name: Rodar Testes
-       run: npm test
+      # 5. Testes (Note o traço '-' no início, isso estava faltando!)
+      - name: Rodar Testes
+        run: npm test
 
-      # 6. Tenta fazer o Build de produção
+      # 6. Build
       - name: Tentar fazer Build
         run: npm run build
