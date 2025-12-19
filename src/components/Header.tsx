@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Header() {
-  const { user, logout } = useAuth(); // Repare que tiramos o 'login' daqui
+  const { user, logout } = useAuth(); 
 
   return (
     <header className="flex h-20 items-center justify-between bg-slate-900 px-8 text-white shadow-md">
@@ -39,7 +39,8 @@ export default function Header() {
         ) : (
           <Link
             href="/login"
-            className="rounded bg-blue-600 px-6 py-2 text-sm font-bold text-white transition hover:bg-blue-700 shadow-lg hover:shadow-blue-500/25"
+            // CORREÇÃO AQUI: px-4 (menor no mobile), md:px-6 (maior no desktop) e whitespace-nowrap (não quebra linha)
+            className="rounded bg-blue-600 px-4 md:px-6 py-2 text-sm font-bold text-white transition hover:bg-blue-700 shadow-lg hover:shadow-blue-500/25 whitespace-nowrap"
           >
             Fazer Login
           </Link>
