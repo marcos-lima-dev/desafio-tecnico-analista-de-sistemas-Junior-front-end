@@ -3,7 +3,7 @@ import { getEvents } from "@/services/events";
 import SearchEvents from "@/components/SearchEvents";
 import EventCard from "@/components/EventCard";
 import Pagination from "@/components/Pagination";
-// Se precisar tipar, importe a interface: import { Event } from "@/types/event";
+
 
 interface HomeProps {
   searchParams: Promise<{ q?: string; page?: string }>;
@@ -28,14 +28,12 @@ export default async function Home(props: HomeProps) {
 
       {events.length === 0 ? (
         <div className="text-center text-slate-500 py-10">
-          {/* CORREÇÃO DAS ASPAS AQUI 👇 */}
           Nenhum evento encontrado para &quot;{query}&quot;.
         </div>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {/* CORREÇÃO DO MAP (Removendo : Event para evitar erro de import) 👇 */}
-            {events.map((event: Event) => (
+              {events.map((event: Event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </div>
