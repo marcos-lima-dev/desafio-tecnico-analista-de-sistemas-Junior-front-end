@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import toast from "react-hot-toast"; 
+
 export default function LoginPage() {
   const { login } = useAuth();
   
@@ -23,10 +24,8 @@ export default function LoginPage() {
     try {
       await login(email, password);
       
-    } catch (err: any) {
-      
+    } catch {
       setPassword("");
-      
       setLoading(false);
     }
   }

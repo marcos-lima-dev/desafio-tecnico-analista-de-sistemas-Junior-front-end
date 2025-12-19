@@ -1,7 +1,7 @@
 import { GET, POST } from './route';
 import { NextRequest } from 'next/server';
-import { describe, it, expect, vi } from 'vitest';
-function mockRequest(method: string, url: string, body?: any) {
+import { describe, it, expect } from 'vitest';
+function mockRequest(method: string, url: string, body?: object) {
 
   const headers = new Headers();
   if (body) {
