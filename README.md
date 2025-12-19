@@ -22,6 +22,7 @@ Sistema de gerenciamento de eventos desenvolvido como desafio técnico. O projet
   - Proteção de rotas privadas (Middleware/Context).
   - Feedback de carregamento e erro.
 - [x] **UX Aprimorada:**
+  - **Interface Condicional:** Botão de exclusão visível apenas para usuários autenticados.
   - Confirmação interativa para exclusão.
   - Toasts de sucesso e erro.
   - Estados de loading em botões.
@@ -51,27 +52,30 @@ Para testar as funcionalidades administrativas (Criar e Excluir eventos), utiliz
 ## 📦 Como rodar o projeto
 
 1. **Clone o repositório:**
-2. 
    ```bash
-
-    git clone [https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git](https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git)
-   
+   git clone https://github.com/marcos-lima-dev/desafio-tecnico-analista-de-sistemas-Junior-front-end.git
+   ```
+2. **Entre na pasta do projeto:**
+   ```bash
    cd desafio-tecnico-analista-de-sistemas-Junior-front-end
-4. **Instale as dependências:**
+   ```
+3. **Instale as dependências:**
    ```bash
    npm install
    ```
-5. **Rode o servidor de desenvolvimento:**
+4. **Rode o servidor de desenvolvimento:**
    ```bash
    npm run dev
    ```
-6. **Acesse:** abra http://localhost:3000 no seu navegador.
+5. **Acesse:** abra http://localhost:3000 no seu navegador.
 
-📝 Notas do Desenvolvedor
-Persistência de Dados: Como este é um desafio técnico com foco em Front-end, não foi utilizado banco de dados externo. A persistência é feita em memória (src/data/events.ts).
+## 📝 Notas do Desenvolvedor
 
-Nota: Ao reiniciar o servidor (ou salvar arquivos em dev mode), os dados criados via navegador são resetados para o estado inicial, enquanto os dados "hardcoded" no arquivo permanecem fixos.
+**Persistência de Dados:** Como este é um desafio técnico com foco em Front-end, não foi utilizado banco de dados externo. A persistência é feita em memória (`src/data/events.ts`).
 
-Next.js 15 Compliance: O projeto segue estritamente as novas convenções do Next 15, incluindo o uso de await params em rotas dinâmicas e revalidação de cache sob demanda (router.refresh).
+> *Nota: Ao reiniciar o servidor (ou salvar arquivos em dev mode), os dados criados via navegador são resetados para o estado inicial, enquanto os dados "hardcoded" no arquivo permanecem fixos.*
 
-Feito com 💙 por Marcos de Sousa Lima
+**Next.js 15 Compliance:** O projeto segue estritamente as novas convenções do Next 15, incluindo o uso de `await params` em rotas dinâmicas e revalidação de cache sob demanda (`router.refresh`).
+
+---
+Feito com 💙 por **Marcos de Sousa Lima**
